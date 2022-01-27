@@ -1,8 +1,10 @@
+import { Errors } from "../@types"
+
 interface responseType {
-	status: boolean,
-	message: string,
-	package?: Record<string, any>,
-	payload?: Record<string, any>
+    status: boolean,
+    message: string,
+    package?: Record<string, any>,
+    payload?: Record<string, any>
 }
 
 
@@ -48,9 +50,13 @@ const notFountResponse: responseType = {
     message: 'Unable to find the requested resource!',
 }
 
+const unauthorizedResponse: Errors = {
+    msg: 'Unauthorized'
+}
 
 export {
-	successResponse,
-	failResponse,
-	notFountResponse
+    successResponse,
+    failResponse,
+    notFountResponse,
+    unauthorizedResponse
 }
