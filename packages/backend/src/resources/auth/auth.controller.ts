@@ -1,5 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { Request, Response } from "express";
+import { signupService } from './auth.service'
+import { signupSchema } from './auth.validation';
+import * as yup from 'yup'
 
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
@@ -10,24 +13,18 @@ const prisma = new PrismaClient()
 // signup
 export const signup = async (req: Request, res: Response): Promise<any> => {
     const { email, password, username, name } = req.body
-    try {
-        console.log('first');
-        const user = await prisma.user.create({
-            data: {
-                email,
-                password: bcrypt.hashSync(password, 8),
-                username,
-                name
-            }
-        })
+    
+    const user = await signupService({
+        email,
+        password,
+        username,
+        name
+    })
 
-        res.send(user)
-    } catch (error) {
-        console.log(error);
-    }
+    res.send(user)
 }
 
-// signup
+// signup 
 export const signin = async (req: Request, res: Response) => {
     // get data from body
     const { username, password } = req.body

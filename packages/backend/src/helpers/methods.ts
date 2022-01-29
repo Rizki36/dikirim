@@ -1,4 +1,4 @@
-import { Errors } from "../@types"
+import { Errors } from "../../@types"
 
 interface responseType {
     status: boolean,
@@ -54,9 +54,14 @@ const unauthorizedResponse: Errors = {
     msg: 'Unauthorized'
 }
 
+const unauthenticatedResponse: Errors = {
+    msg: 'Unauthenticated'
+}
+
 export {
     successResponse,
     failResponse,
     notFountResponse,
-    unauthorizedResponse
+    unauthorizedResponse,
+    unauthenticatedResponse
 }
