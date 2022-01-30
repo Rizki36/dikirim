@@ -4,7 +4,7 @@ import { SchemaOf } from 'yup'
 
 const validate = (schema: SchemaOf<any>, options?: ValidateOptions) => async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		await schema.validateSync(req.body, {
+		await schema.validate(req.body, {
 			abortEarly: false,
 			stripUnknown: true,
 			...options

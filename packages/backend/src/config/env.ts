@@ -5,6 +5,8 @@ dotenv.config()
 
 // node env
 export const NODE_ENV = process.env.NODE_ENV ?? 'development'
+export const HOST = process.env.HOST ?? '127.0.0.1'
+export const PORT = process.env.PORT ?? 5000
 
 // jwt access
 export const JWT_SECRET_ACCESS_TOKEN: any = process.env.JWT_SECRET_ACCESS_TOKEN
@@ -23,3 +25,5 @@ export const DB_USERNAME = process.env.DB_USERNAME ?? 'root'
 export const DB_PASSWORD = process.env.DB_PASSWORD ?? undefined
 export const DB_OPERATOR_ALIAS = process.env.DB_OPERATOR_ALIAS ?? undefined
 export const DB_TIMEZONE = process.env.DB_TIMEZONE ?? '+07:00' // for mysql = +07:00, for postgres = Asia/Jakarta
+
+export const API_SECRET = process.env.API_SECRET ?? '123456789098765432'

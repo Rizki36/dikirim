@@ -1,67 +1,71 @@
 import { Errors } from "../../@types"
 
-interface responseType {
-    status: boolean,
-    message: string,
-    package?: Record<string, any>,
-    payload?: Record<string, any>
+type data = Record<string, any>
+interface ResponseType {
+	status: boolean,
+	message: string,
+	data?: data,
 }
 
-
-/**
- *
- * @param message
- * @param payload
- * @returns {{package, message, status: boolean}}
- */
-const successResponse = (message: string, payload: Record<string, any>): responseType => {
-    return {
-        status: true,
-        message: message,
-        package: payload
-    }
+export const successResponse = (data?: data): ResponseType => {
+	return {
+		status: true,
+		message: 'Success !',
+		data
+	}
 }
 
-/**
- *
- * @param message
- * @param payload
- * @returns {{message, status: boolean}}
- */
-const failResponse = (message: string, payload?: Record<string, any>): responseType => {
-    let response: responseType = {
-        status: false,
-        message: message,
-    }
-
-    if (payload) {
-        response.payload = payload
-    }
-
-    return response
+export const errorResponse = (message: string, data?: data): ResponseType => {
+	return {
+		status: false,
+		message: message ?? 'Error !',
+		data
+	}
 }
 
-/**
- *
- * @type {{message: string, status: boolean}}
- */
-const notFountResponse: responseType = {
-    status: false,
-    message: 'Unable to find the requested resource!',
+export const createdResponse = (data?: data): ResponseType => {
+	return {
+		status: true,
+		message: 'Created !',
+		data
+	}
 }
 
-const unauthorizedResponse: Errors = {
-    msg: 'Unauthorized'
+export const notFountResponse = (data?: data): ResponseType => {
+	return {
+		status: false,
+		message: 'Not Found!',
+	}
 }
 
-const unauthenticatedResponse: Errors = {
-    msg: 'Unauthenticated'
+export const unauthorizedResponse = (data?: data): ResponseType => {
+	return {
+		status: false,
+		message: 'Unauthorized!',
+		data
+	}
 }
 
-export {
-    successResponse,
-    failResponse,
-    notFountResponse,
-    unauthorizedResponse,
-    unauthenticatedResponse
+export const unauthenticatedResponse = (data?: data): ResponseType => {
+	return {
+		status: false,
+		message: 'Unauthenticated!',
+		data
+	}
+}
+
+export const errorValidationResponse = (data?: data): ResponseType => {
+	return {
+		status: false,
+		message: 'Data is not valid!',
+		data
+	}
+}
+
+export const invalidPasswordResponse = (data?: data): ResponseType => {
+	return {
+		status: false,
+		message: 'Password is not valid!',
+		data
+	}
 }

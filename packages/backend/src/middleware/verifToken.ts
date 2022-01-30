@@ -1,29 +1,36 @@
+import jwt from 'jsonwebtoken'
+import { ErrorUnAuthenticated } from './../lib/Errors';
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
-import { unauthenticatedResponse } from "../helpers/methods";
+import { API_SECRET } from '../config/env';
 
-const jwt = require("jsonwebtoken");
 
 const prisma = new PrismaClient()
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    jwt.verify(req.headers.authorization.split(' ')[1], process.env.API_SECRET, function (err: any, decode: any) {
-      if (!decode) res.status(401).send(unauthenticatedResponse);
+  try {
+    const [prefix, token] = req?.headers?.authorization?.split(' ') ?? ['', '']
+
+    // get token from access_token by explode and get first index
+    if (prefix !== 'Bearer' || token === '') throw new ErrorUnAuthenticated();
+
+    jwt.verify(token, API_SECRET, function (err, decode) {
+      if (!decode) throw new ErrorUnAuthenticated()
+
+      // @ts-ignore
+      const id = decode.id;
+
       prisma.user.findFirst({
-        where: {
-          id: decode.id
-        }
+        where: { id }
       }).then(user => {
-        if (!user) return res.status(401).send(unauthenticatedResponse);
+        if (!user) throw new ErrorUnAuthenticated()
         req.user = user;
+
         next();
-      }).catch(err => {
-        res.status(401).send(unauthenticatedResponse);
-      })
+      }).catch(next)
     })
-  } else {
-    res.status(401).send(unauthenticatedResponse);
+  } catch (error) {
+    next(error)
   }
 }
 

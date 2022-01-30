@@ -1,15 +1,17 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import { cors } from 'cors-ts'
 import indexRoutes from './resources/routes'
 import methodOverride from 'method-override'
 import errorHandlerYup from './middleware/errorHandlerYup';
+import errorHandlerMyError from './middleware/errorHandlerMyError';
+import errorHandlerPrisma from './middleware/errorHandlerPrisma';
 
 const cookieParser = require('cookie-parser')
 const port = process.env.PORT
 
 
 class App {
-	private readonly application: Application
+	public readonly application: Application
 
 	constructor() {
 		this.application = express()
@@ -36,6 +38,16 @@ class App {
 			res.status(404).send({ msg: 'Sorry, HTTP resource you are looking for was not found.' })
 		})
 
+
+		this.application.use(errorHandlerYup);
+		this.application.use(errorHandlerPrisma);
+		this.application.use(errorHandlerMyError);
+
+		// Default Error handler
+		this.application.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+			console.log(err);
+			console.log('errrrr');
+		})
 	}
 
 	public run(): void {
@@ -43,13 +55,6 @@ class App {
 		this.application.listen(port, () => {
 			console.log(`Example app listening at port http://localhost:${port}`)
 		})
-
-
-		// Error handler
-		this.application.use(function (err: any, req: Request, res: Response) {
-			console.log('errrrr');
-		})
-		this.application.use(errorHandlerYup);
 	}
 }
 
