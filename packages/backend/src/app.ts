@@ -1,10 +1,11 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { cors } from 'cors-ts'
 import indexRoutes from './resources/routes'
-import methodOverride from 'method-override'
 import errorHandlerYup from './middleware/errorHandlerYup';
 import errorHandlerMyError from './middleware/errorHandlerMyError';
 import errorHandlerPrisma from './middleware/errorHandlerPrisma';
+import swaggerUi from 'swagger-ui-express';
+import { optionsSwaggerUI, swaggerSpec } from './lib/DocsSwagger';
 
 const cookieParser = require('cookie-parser')
 const port = process.env.PORT
@@ -28,6 +29,17 @@ class App {
 		this.application.use(express.json())
 		this.application.use(express.urlencoded())
 		this.application.use(cookieParser())
+
+		this.application.get('/api-docs.json', (req: Request, res: Response) => {
+			res.setHeader('Content-Type', 'application/json')
+			res.send(swaggerSpec)
+		})
+
+		this.application.use('/api-docs', swaggerUi.serve)
+		this.application.get(
+			'/api-docs',
+			swaggerUi.setup(swaggerSpec, optionsSwaggerUI)
+		)
 	}
 
 	private routes(): void {
