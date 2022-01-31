@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest ./src/main.test.ts",
     "compile": "rimraf dist && tsc",
-    "start": "nodemon --exec ts-node server.ts --watch",
-    "prepare": "husky install"
+    "start": "nodemon --exec ts-node server.ts --watch"
   },
   "repository": {
     "type": "git",
