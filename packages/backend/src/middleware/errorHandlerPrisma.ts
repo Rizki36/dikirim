@@ -14,7 +14,7 @@ async function errorHandlerPrisma(
 
         return res
             .status(StatusCodes.UNPROCESSABLE_ENTITY)
-            .json(errorResponse(err.message))
+            .json(errorResponse({ message: err.message }))
     }
 
     next(err)

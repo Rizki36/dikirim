@@ -1,71 +1,63 @@
-import { Errors } from "../../@types"
+import { IResponse } from './../../@types/index.d';
 
 type data = Record<string, any>
-interface ResponseType {
-	status: boolean,
-	message: string,
-	data?: data,
-}
 
-export const successResponse = (data?: data): ResponseType => {
+export const successResponse = ({ message, data }: { message?: string, data?: Record<string, any> }): IResponse => {
 	return {
 		status: true,
-		message: 'Success !',
-		data
+		message: message ?? 'Success !',
+		data: data ?? null,
+		errors: null
 	}
 }
 
-export const errorResponse = (message: string, data?: data): ResponseType => {
+export const errorResponse = ({ message, errors }: { message?: string, errors?: Record<string, any> }): IResponse => {
 	return {
 		status: false,
 		message: message ?? 'Error !',
-		data
+		data: null,
+		errors: errors ?? null
 	}
 }
 
-export const createdResponse = (data?: data): ResponseType => {
-	return {
-		status: true,
+export const createdResponse = (data?: data) => {
+	return successResponse({
 		message: 'Created !',
 		data
-	}
+	})
 }
 
-export const notFountResponse = (data?: data): ResponseType => {
-	return {
-		status: false,
-		message: 'Not Found!',
-	}
+export const notFountResponse = (errors?: data) => {
+	return errorResponse({
+		message: 'Not Found !',
+		errors
+	})
 }
 
-export const unauthorizedResponse = (data?: data): ResponseType => {
-	return {
-		status: false,
-		message: 'Unauthorized!',
-		data
-	}
+export const unauthorizedResponse = (errors?: data) => {
+	return errorResponse({
+		message: 'Unauthorized !',
+		errors
+	})
 }
 
-export const unauthenticatedResponse = (data?: data): ResponseType => {
-	return {
-		status: false,
+export const unauthenticatedResponse = (errors?: data) => {
+	return errorResponse({
 		message: 'Unauthenticated!',
-		data
-	}
+		errors
+	})
 }
 
-export const errorValidationResponse = (data?: data): ResponseType => {
-	return {
-		status: false,
+export const errorValidationResponse = (errors?: data) => {
+	return errorResponse({
 		message: 'Data is not valid!',
-		data
-	}
+		errors
+	})
 }
 
-export const invalidPasswordResponse = (data?: data): ResponseType => {
-	return {
-		status: false,
+export const invalidPasswordResponse = (errors?: data) => {
+	return errorResponse({
 		message: 'Password is not valid!',
-		data
-	}
+		errors
+	})
 }
