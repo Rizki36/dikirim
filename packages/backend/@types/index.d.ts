@@ -7,3 +7,10 @@ export interface Errors {
 
 export interface UserLogin implements Omit<User, "password"> {
 }
+
+export interface IResponse {
+    status: boolean,
+    message: string,
+    data: Record<string, any> | null,
+    errors: Record<string, any> | null
+}

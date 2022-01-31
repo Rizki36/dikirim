@@ -11,7 +11,7 @@ async function errorHandlerMyError(
 	if (err instanceof MyError) {
 		return res
 			.status(err.code)
-			.json(errorResponse(err.message))
+			.json(errorResponse({ message: err.message }))
 	}
 
 	next(err)

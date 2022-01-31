@@ -1,4 +1,4 @@
-import { successResponse, createdResponse } from './../../helpers/methods';
+import { successResponse } from './../../helpers/methods';
 import { NextFunction, Request, Response } from "express";
 import { accountService, signinService, signupService } from './auth.service'
 import { StatusCodes } from 'http-status-codes';
@@ -11,7 +11,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
 
     try {
         // get data
-        const user = await signupService({
+        const data = await signupService({
             email,
             password,
             username,
@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
         })
 
         res.status(StatusCodes.CREATED)
-            .send(createdResponse(user))
+            .send(successResponse({ data }))
     } catch (error) {
         next(error)
     }
@@ -39,7 +39,7 @@ export const signin = async (req: Request, res: Response, next: NextFunction) =>
 
         //responding to client request with user profile success message and  access token .
         res.status(StatusCodes.OK)
-            .send(successResponse(data));
+            .send(successResponse({ data }));
     } catch (error) {
         next(error)
     }
@@ -52,7 +52,7 @@ export const account = async (req: Request, res: Response, next: NextFunction): 
 
         const account = await accountService(req.user?.id)
 
-        res.send(successResponse(account))
+        res.send(successResponse({ data: account }))
     } catch (error) {
         next(error)
     }
