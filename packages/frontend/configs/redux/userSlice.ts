@@ -5,7 +5,6 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist/lib/constants";
-import cookieCutter from 'cookie-cutter'
 
 export interface UserState {
   account: IUser | null;

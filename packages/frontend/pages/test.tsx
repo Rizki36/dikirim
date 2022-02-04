@@ -1,8 +1,6 @@
 import backendApi from "@/configs/api/backendApi";
 import { AxiosError, AxiosResponse } from "axios";
-import withAuth from "hoc/WithAuth";
 import { FormEvent, useState } from "react";
-import Cookie from 'js-cookie';
 import { NextPage } from "next";
 import WithAuth from "hoc/WithAuth";
 import { useAppDispatch } from "@/configs/redux/hooks";
@@ -28,15 +26,6 @@ const Test: NextPage = () => {
         })
     }
 
-    // const handleClickProfile = () => {
-    //     backendApi.get<{ data: any }>('/account')
-    //         .then((res: AxiosResponse<{ accessToken: string }>) => {
-    //             console.log(res);
-    //         }).catch(e => {
-    //             console.log(e);
-    //         })
-    // }
-
     return (
         <>
             <form method="post" onSubmit={handleSubmit}>
@@ -52,7 +41,6 @@ const Test: NextPage = () => {
                     <button>Submit</button>
                 </div>
             </form>
-            {/* <button onClick={handleClickProfile}>Profile</button> */}
         </>
     )
 }
