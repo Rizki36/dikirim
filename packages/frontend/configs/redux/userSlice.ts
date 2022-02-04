@@ -1,79 +1,44 @@
-import { UserType } from "./../appTypes";
+import backendApi from '@/configs/api/backendApi';
+import { IUser } from "./../appTypes";
 import {
-  AsyncThunkOptions,
-  createAsyncThunk,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import backendApi from "../api/backendApi";
 import { PURGE } from "redux-persist/lib/constants";
+import cookieCutter from 'cookie-cutter'
 
 export interface UserState {
-  user: UserType | null;
-  isFetching: boolean;
-  isError: boolean;
+  account: IUser | null;
+  token: string | null;
 }
 
 const initialState: UserState = {
-  user: null,
-  isFetching: false,
-  isError: false,
+  account: null,
+  token: null
 };
-
-export const userLogin = createAsyncThunk(
-  "user/login",
-  async (
-    arg: { username: string; password: string },
-    { rejectWithValue, fulfillWithValue }
-  ): Promise<any> => {
-    try {
-      const { username, password } = arg;
-      const response = await backendApi.post("/login", {
-        email: username,
-        password: password,
-      });
-
-      const {
-        data: {
-          data: { id, email, avatar },
-        },
-      } = await backendApi.get("/users/2");
-
-      return fulfillWithValue<UserType>({
-        id,
-        email,
-        img: avatar,
-      });
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser(state, action: PayloadAction<IUser>) {
+      state.account = action.payload;
+    },
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload
+    },
+    logout(state) {
+      console.log('loggedOut');
+      return initialState
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(userLogin.pending, (state, action) => {
-        state.isError = false;
-        state.isFetching = true;
-      })
-      // TODO : change any type
-      .addCase(userLogin.fulfilled, (state, action: PayloadAction<any>) => {
-        state.user = action.payload;
-        state.isError = false;
-        state.isFetching = false;
-      })
-      .addCase(userLogin.rejected, (state, action) => {
-        state.isError = true;
-        state.isFetching = false;
-      })
       .addCase(PURGE, (state) => {
         state = initialState;
       });
   },
 });
 
+export const { setUser, setToken, logout } = userSlice.actions
 export default userSlice.reducer;
