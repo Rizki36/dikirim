@@ -9,11 +9,13 @@ const prisma = new PrismaClient()
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const [prefix, token] = req?.headers?.authorization?.split(' ') ?? ['', '']
+    const token = req.cookies?.token;
+    // const [prefix, token] = req?.headers?.authorization?.split(' ') ?? ['', '']
 
     // get token from access_token by explode and get first index
-    if (prefix !== 'Bearer' || token === '') throw new ErrorUnAuthenticated();
+    // if (prefix !== 'Bearer' || token === '') throw new ErrorUnAuthenticated();
 
+    // @ts-ignore
     jwt.verify(token, API_SECRET, function (err, decode) {
       if (!decode) throw new ErrorUnAuthenticated()
 

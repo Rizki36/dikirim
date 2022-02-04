@@ -25,7 +25,10 @@ class App {
 	}
 
 	private plugins(): void {
-		this.application.use(cors())
+		this.application.use(cors({
+			origin: 'http://localhost:3000',
+			credentials: true
+		}))
 		this.application.use(express.json())
 		this.application.use(express.urlencoded())
 		this.application.use(cookieParser())
