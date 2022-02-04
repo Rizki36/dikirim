@@ -26,3 +26,8 @@ export const signupSchema = yup.object({
 	password: yup.string().min(8).max(25).required(),
 	name: yup.string().min(4).max(25).required(),
 })
+
+export const signinSchema = yup.object({
+	username: yup.string().min(4).max(25).required(),
+	password: yup.string().min(8).max(25).required(),
+})
