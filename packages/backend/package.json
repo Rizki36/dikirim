@@ -1,5 +1,6 @@
 {
-  "name": "create-express-boilerplate",
+  "name": "backend",
+  "private": true,
   "version": "3.1.1",
   "description": "basic setup for node api, using express js",
   "main": "index.js",

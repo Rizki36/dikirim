@@ -1,6 +1,19 @@
 {
   "name": "root",
+  "version": "1.0.0",
   "private": true,
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 14.0.0 < 15.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "prisma": "lerna exec --scope backend -- cd prisma && npx prisma generate",
+    "be": "lerna exec --scope backend -- yarn start",
+    "fe": "lerna exec --scope frontend -- yarn dev"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }

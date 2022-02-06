@@ -20,6 +20,15 @@
     -   Next JS
     -   Typescript
 
+## How To Run
+
+-   create database `learn_dikirim`
+-   init yarn `yarn`
+-   bootstrap packages `yarn lerna bootstrap`
+-   Generate Prisma Client `yarn prisma`
+-   Run backend `yarn be`
+-   Run frontend `yarn fe`
+
 ## Need Your Help
 
 Hubungi saya jika ingin berkontribusi
