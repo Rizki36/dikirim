@@ -1,15 +1,14 @@
 import backendApi from "@/configs/api/backendApi";
 import { AxiosError, AxiosResponse } from "axios";
 import { FormEvent, useState } from "react";
-import { NextPage } from "next";
-import WithAuth from "hoc/WithAuth";
 import { useAppDispatch } from "@/configs/redux/hooks";
 import { setUser } from "@/configs/redux/userSlice";
 import Router from "next/router";
+import { Page } from "../types";
 
-const Test: NextPage = () => {
-    const [username, setUsername] = useState('fitra');
-    const [password, setPassword] = useState('123456789');
+const Test: Page = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const dispatch = useAppDispatch();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -45,4 +44,8 @@ const Test: NextPage = () => {
     )
 }
 
-export default WithAuth(Test, { mustLoggedIn: false });
+Test.auth = {
+    mustLoggedIn: false
+}
+
+export default Test;

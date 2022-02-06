@@ -1,19 +1,15 @@
-import UserLayout from "@/components/layouts/ResellerLayout";
-import { UserRole } from "constans/Auth";
-import { signOut } from "next-auth/react";
-import { AuthInterface } from "types";
+import ResellerLayout from "@/components/layouts/ResellerLayout";
+import { Page } from "../types";
 
-const Home = () => {
+const Home: Page = () => {
   return (
-    <UserLayout>
+    <div>
       {/* <div>Home</div> */}
       {/* <button onClick={() => signOut()}>Sign Out</button> */}
-    </UserLayout>
+    </div>
   );
 };
 
-Home.auth = {
-  role: UserRole.reseller,
-} as AuthInterface;
+Home.layout = ResellerLayout
 
 export default Home;

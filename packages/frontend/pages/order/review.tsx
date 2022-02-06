@@ -1,8 +1,6 @@
 import OrderLayout from "@/components/pages/order/Layout";
 import { useAppDispatch } from "@/configs/redux/hooks";
 import { updateStep } from "@/configs/redux/orderSlice";
-import { AuthInterface } from "types";
-import { UserRole } from "constans/Auth";
 import { useEffect } from "react";
 import Link from "next/link";
 
@@ -30,8 +28,5 @@ const Review = () => {
   );
 };
 
-Review.auth = {
-  role: UserRole.reseller,
-} as AuthInterface;
 
-export default Review;
+export default Review

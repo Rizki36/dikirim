@@ -1,7 +1,8 @@
+import { FC } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
-const ResellerLayout = ({ children }) => {
+const ResellerLayout: FC = ({ children }) => {
   return (
     <div className="grid grid-cols-[1fr] grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr] lg:grid-rows-[auto,1fr] h-screen">
       <Sidebar className="hidden lg:grid row-span-2" />

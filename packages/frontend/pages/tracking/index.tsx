@@ -1,17 +1,5 @@
-import ResellerLayout from "@/components/layouts/ResellerLayout";
-import { UserRole } from "constans/Auth";
-import { AuthInterface } from "types";
-
 const Tracking = () => {
-  return (
-    <ResellerLayout>
-      <div>tracking</div>
-    </ResellerLayout>
-  );
+  return <div>tracking</div>;
 };
 
-Tracking.auth = {
-  role: UserRole.reseller,
-} as AuthInterface;
-
-export default Tracking;
+export default Tracking

@@ -1,6 +1,3 @@
-import UserLayout from "@/components/layouts/ResellerLayout";
-import { UserRole } from "constans/Auth";
-import { AuthInterface } from "types";
 import { useField, Form, FormikProps, Formik } from "formik";
 import Truck from "@/components/icons/Truck";
 import OrderLayout from "@/components/pages/order/Layout";
@@ -182,9 +179,8 @@ const InputRadioButton = ({ clasName, children, ...props }: any) => {
       />
       <label
         htmlFor={field.name + "-" + props.value}
-        className={`peer-checked:bg-primary border border-primary w-full px-4 py-2 rounded-lg flex items-center ${clasName} ${
-          field.checked ? "text-white" : ""
-        }`}
+        className={`peer-checked:bg-primary border border-primary w-full px-4 py-2 rounded-lg flex items-center ${clasName} ${field.checked ? "text-white" : ""
+          }`}
       >
         {children}
       </label>
@@ -192,8 +188,4 @@ const InputRadioButton = ({ clasName, children, ...props }: any) => {
   );
 };
 
-Pickup.auth = {
-  role: UserRole.reseller,
-} as AuthInterface;
-
-export default Pickup;
+export default Pickup

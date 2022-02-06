@@ -4,29 +4,36 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 import store, { persistor } from "@/configs/redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { SessionProvider } from "next-auth/react";
 import React from "react";
-import Auth from "@/configs/routes/Auth";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
+import type { AppProps } from 'next/app'
+import {  Page } from "../types";
+import ResellerLayout from "@/components/layouts/ResellerLayout";
+import Auth from "@/components/Auth";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+
+type Props = AppProps & {
+  Component: Page
+}
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
+
+  // default layout
+  const Layout = Component.layout ?? ResellerLayout
+
   return (
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <SWRConfig>
-            <SessionProvider session={session}>
-              <Head>
-                <title>Dikirim ❤️</title>
-              </Head>
-              {Component.auth ? (
-                <Auth {...Component.auth}>
-                  <Component {...pageProps} />
-                </Auth>
-              ) : (
+            <Head>
+              <title>Dikirim ❤️</title>
+            </Head>
+            <Layout>
+              <Auth {...Component.auth}>
                 <Component {...pageProps} />
-              )}
-            </SessionProvider>
+              </Auth>
+            </Layout>
           </SWRConfig>
         </PersistGate>
       </Provider>
