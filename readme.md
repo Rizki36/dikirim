@@ -19,7 +19,3 @@
 -   Frontend
     -   Next JS
     -   Typescript
-
-## Need Your Help
-
-Hubungi saya jika ingin berkontribusi
